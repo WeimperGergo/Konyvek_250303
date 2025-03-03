@@ -28,7 +28,7 @@ public class Kollekcio {
     public void fajlbaIrKonyvekBF() {
         try (BufferedWriter iras = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("könyvek.txt"), "UTF-8"))) {
             for (Konyv konyv : konyvek) {
-                iras.write(konyv.getCim() + ";" + konyv.getSzerzo() + ";" + konyv.getKiadasEv() + "\n");
+                iras.write(konyv.getCim() + ";" + konyv.getSzerzok() + ";" + konyv.getKiadasEv() + "\n");
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

@@ -1,17 +1,26 @@
 package hu.szamalk.modell;
 
 import java.io.*;
-import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
+
 
 public class Konyv implements Serializable {
     private String cim;
-    private String szerzo;
+    private List<String> szerzok;
     private int kiadasEv;
+    private transient UUID id;
 
-    public Konyv(String cim, String szerzo, int kiadasEv) {
+    public Konyv(String cim, List<String> szerzok, int kiadasEv) {
         this.cim = cim;
         this.kiadasEv = kiadasEv;
-        this.szerzo = szerzo;
+        this.szerzok = szerzok;
+        ujIdGeneralas();
+    }
+
+    public void ujIdGeneralas() {
+        this.id = UUID.randomUUID();
     }
 
     public Konyv beOlvas(){
@@ -34,7 +43,7 @@ public class Konyv implements Serializable {
 
     public void fajlbaIrBF(Konyv konyv) {
         try (BufferedWriter iras = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("könyv.txt"), "UTF-8"))) {
-            iras.write(konyv.getCim() + ";" + konyv.getSzerzo() + ";" + konyv.getKiadasEv());
+            iras.write(konyv.getCim() + ";" + konyv.getSzerzok() + ";" + konyv.getKiadasEv());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -52,12 +61,8 @@ public class Konyv implements Serializable {
         }
     }
 
-    public String getSzerzo() {
-        return szerzo;
-    }
-
-    public void setSzerzo(String szerzo) {
-        this.szerzo = szerzo;
+    public List<String> getSzerzok() {
+        return szerzok;
     }
 
     public int getKiadasEv() {
